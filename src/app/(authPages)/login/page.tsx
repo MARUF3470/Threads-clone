@@ -16,7 +16,7 @@ const RegistrationPage = () => {
     if (status === "authenticated") {
       router.push("/");
     }
-  }, [status]);
+  }, [status, router]);
   const params = useSearchParams();
   const [authState, setAuthState] = useState<AuthStateType>({
     email: "",

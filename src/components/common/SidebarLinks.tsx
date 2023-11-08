@@ -46,7 +46,7 @@ const SidebarLinks = () => {
         </Link>
       </li>
       <li>
-        <Link href="/" className="flex items-center gap-4 justify-start">
+        <Link href="/profile" className="flex items-center gap-4 justify-start">
           <User2 height={20} width={20} />
           <p
             className={`text-lg lg:text-xl hover:font-semibold duration-300 ${

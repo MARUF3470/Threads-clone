@@ -8,7 +8,6 @@ import { PostType } from "@/type";
 const Home = async () => {
   // const session = await getServerSession(authOptions);
   const posts: Array<PostType> | [] = await getPost();
-  console.log(posts);
   return (
     // <div>
     //   {/* <ThemeToggleBtn /> */}

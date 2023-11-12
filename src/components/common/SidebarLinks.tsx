@@ -22,7 +22,7 @@ const SidebarLinks = () => {
         </Link>
       </li>
       <li>
-        <Link href="/" className="flex items-center gap-4 justify-start">
+        <Link href="/explore" className="flex items-center gap-4 justify-start">
           <Search height={20} width={20} />
           <p
             className={`text-lg lg:text-xl hover:font-semibold duration-300 ${
@@ -34,7 +34,10 @@ const SidebarLinks = () => {
         </Link>
       </li>
       <li>
-        <Link href="/" className="flex items-center gap-4 justify-start">
+        <Link
+          href="/notification"
+          className="flex items-center gap-4 justify-start"
+        >
           <Bell height={20} width={20} />
           <p
             className={`text-lg lg:text-xl hover:font-semibold duration-300 ${

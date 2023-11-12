@@ -105,7 +105,7 @@ const LoginPage = () => {
             <Label htmlFor="password_confirmation">Password_confirmation</Label>
             <Input
               name="password_confirmation"
-              type="password_confirmation"
+              type="password"
               id="password_confirmation"
               placeholder="Enter your password_confirmation"
               onChange={(e) =>

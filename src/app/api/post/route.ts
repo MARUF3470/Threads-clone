@@ -9,8 +9,7 @@ import { imageValidator } from "@/validation/imageValidator";
 import { CustomSession, authOptions } from "../auth/[...nextauth]/option";
 import { CustomErrorReporter } from "@/validation/customErrorReporter";
 import { postSchema } from "@/validation/postSchema";
-
-export const GET = async(request: NextRequest)=> {
+export const GET = async (request: NextRequest) => {
   const session: CustomSession | null = await getServerSession(authOptions);
   if (!session) {
     return NextResponse.json({ status: 401, message: "Un-Authorized" });
@@ -24,9 +23,15 @@ export const GET = async(request: NextRequest)=> {
           username: true,
         },
       },
+      Likes: {
+        take: 1,
+        where: {
+          user_id: Number(session?.user?.id),
+        },
+      },
     },
     orderBy: {
-      id:'desc',
+      id: 'desc',
     }
   })
 
@@ -97,8 +102,7 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     if (error instanceof errors.E_VALIDATION_ERROR) {
       return NextResponse.json(
-        { status: 400, errors: error.messages },
-        { status: 200 }
+        { status: 400, errors: error.messages }
       );
     }
   }

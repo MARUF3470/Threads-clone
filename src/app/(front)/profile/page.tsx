@@ -6,13 +6,17 @@ import UserProfileAvatar from "@/components/common/UserProfileAvater";
 import { ArrowLeft } from "lucide-react";
 import { getServerSession } from "next-auth";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { getUserPost } from "@/lib/serverMethods";
-import { PostType } from "@/type";
+import { getUserComment, getUserPost } from "@/lib/serverMethods";
+import { CommentType, PostType } from "@/type";
 import PostCard from "@/components/common/PostCard";
 import DynamicBar from "@/components/common/DynamicBar";
+
+import CommentCard from "@/components/common/CommentCard";
 const ProfilePage = async () => {
   const session: CustomSession | null = await getServerSession(authOptions);
   const posts: Array<PostType> | [] = await getUserPost();
+  const comments: Array<CommentType> | [] = await getUserComment();
+
   return (
     <div>
       <DynamicBar title="Profile" />
@@ -32,18 +36,33 @@ const ProfilePage = async () => {
             <TabsTrigger className="w-full" value="post">
               Post
             </TabsTrigger>
-            <TabsTrigger className="w-full" value="password">
-              password
+            <TabsTrigger className="w-full" value="comment">
+              Comments
             </TabsTrigger>
           </TabsList>
           <TabsContent value="post">
-            {[posts]?.length ? (
-              posts.map((post) => <PostCard key={post.id} post={post} />)
+            {posts?.length ? (
+              posts.map((post) => (
+                <PostCard key={post.id} post={post} isAuthCard={true} />
+              ))
             ) : (
               <h1>You do not have any post</h1>
             )}
           </TabsContent>
-          <TabsContent value="password">Change your password here.</TabsContent>
+          <TabsContent value="comment">
+            {" "}
+            {comments?.length ? (
+              comments.map((comment) => (
+                <CommentCard
+                  comment={comment}
+                  isAuthCard={true}
+                  key={comment.id}
+                />
+              ))
+            ) : (
+              <h1>You did not do any comment</h1>
+            )}
+          </TabsContent>
         </Tabs>
       </div>
     </div>

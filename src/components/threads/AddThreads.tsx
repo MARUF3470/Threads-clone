@@ -25,7 +25,6 @@ const AddThreads = () => {
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = event.target.files?.[0];
     if (selectedFile) {
-      console.log("The image is", selectedFile);
       setimage(selectedFile);
       const imageUrl = URL.createObjectURL(selectedFile);
       setPreviewUrl(imageUrl);

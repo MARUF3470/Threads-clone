@@ -2,7 +2,6 @@
 import CartListUser from "@/components/common/CartListUser";
 import DynamicBar from "@/components/common/DynamicBar";
 import ExploreSearchBar from "@/components/explore/ExploreSearchBar";
-// import { exploreUsers } from "@/lib/serverMethods";
 import { User } from "@/type";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
@@ -12,14 +11,13 @@ const ExplorePage = ({
 }: {
   searchParams: { [key: string]: string | undefined };
 }) => {
-  // const users: Array<User> | [] = await exploreUsers(searchParams?.query!);
   const [users, setUsers] = useState<User[]>([]);
   useEffect(() => {
     axios
       .get(`/api/explore?query=${searchParams?.query!}`)
       .then((res) => setUsers(res.data.data))
       .catch((err) => console.log(err));
-  }, [searchParams?.query!]);
+  }, [searchParams?.query]);
   return (
     <div>
       <DynamicBar title="Explore" />

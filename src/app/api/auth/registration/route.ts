@@ -4,7 +4,7 @@ import { registrationSchema } from "@/validation/registrationSchema";
 import { CustomErrorReporter } from "@/validation/customErrorReporter";
 import { genSaltSync, hashSync } from 'bcryptjs'
 import prisma from "@/DB/db.config";
-export const POST = async (request) => {
+export const POST = async (request: NextRequest) => {
     try {
         const data = await request.json()
         vine.errorReporter = () => new CustomErrorReporter()

@@ -32,6 +32,7 @@ export type PostType = {
     content: string;
     image?: string;
     comment_count: number;
+    Comment?: Array<CommentType> | []
     likes_count: number;
     created_at: string;
     user: User;

@@ -1,16 +1,21 @@
+"use client";
 import DynamicBar from "@/components/common/DynamicBar";
 import UserAvatar from "@/components/common/UserAvatar";
-import { getNotifications } from "@/lib/serverMethods";
 import { formateDate } from "@/lib/utils";
 import { NotificationType } from "@/type";
-import React from "react";
+import axios from "axios";
+import React, { useState } from "react";
 
-const NotificationPage = async () => {
-  const notifications: Array<NotificationType> | [] = await getNotifications();
+const NotificationPage = () => {
+  const [notifications, setNotifications] = useState<NotificationType[]>([]);
+  axios
+    .get("/api/notification")
+    .then((res) => setNotifications(res.data.data))
+    .catch((err) => console.log(err));
   return (
     <div>
       <DynamicBar title="Notification" />
-      {notifications.length ? (
+      {notifications?.length ? (
         notifications?.map((notification) => (
           <div key={notification.id} className="mt-5">
             <div className="flex gap-3">

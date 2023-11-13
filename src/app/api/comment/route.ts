@@ -9,6 +9,7 @@ import prisma from "@/DB/db.config";
 export const POST = async (request: NextRequest) => {
   try {
     const session: CustomSession | null = await getServerSession(authOptions);
+    console.log(session);
     if (!session) {
       return NextResponse.json({ status: 401, message: "Un-Authorized" });
     }

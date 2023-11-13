@@ -5,6 +5,7 @@ import { getServerSession } from "next-auth";
 
 export const GET = async (request: NextRequest, { params }: { params: { id: number } }) => {
     const session: CustomSession | null = await getServerSession(authOptions);
+    console.log('user', session);
     if (!session) {
         return NextResponse.json({ status: 401, message: "Un-Authorized" });
     }

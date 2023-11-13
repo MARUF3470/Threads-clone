@@ -3,10 +3,10 @@ import { CustomSession, authOptions } from "../auth/[...nextauth]/option";
 import { getServerSession } from "next-auth";
 import prisma from "@/DB/db.config";
 
-export const GET =async (request:NextRequest) => {
+export const GET = async (request: NextRequest) => {
     const session: CustomSession | null = await getServerSession(authOptions)
     if (!session) {
-        return NextResponse.json({status: 201, message: "Un-authorized"})
+        return NextResponse.json({ status: 201, message: "Un-authorized" })
     }
     const user = await prisma.user.findMany({
         where: {
@@ -19,7 +19,7 @@ export const GET =async (request:NextRequest) => {
             name: true,
             username: true
         }
-        
+
     })
-   return NextResponse.json({status: 200, data: user})
+    return NextResponse.json({ status: 200, data: user })
 }

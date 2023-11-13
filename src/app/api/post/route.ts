@@ -6,41 +6,9 @@ import { writeFile } from "fs/promises";
 import { getRandomNumber } from "@/lib/utils";
 import prisma from "@/DB/db.config";
 import { imageValidator } from "@/validation/imageValidator";
-import { CustomSession, authOptions } from "../auth/[...nextauth]/option";
 import { CustomErrorReporter } from "@/validation/customErrorReporter";
 import { postSchema } from "@/validation/postSchema";
-export const GET = async (request: NextRequest) => {
-  const session: CustomSession | null = await getServerSession(authOptions);
-  if (!session) {
-    return NextResponse.json({ status: 401, message: "Un-Authorized" });
-  }
-  const posts = await prisma.post.findMany({
-    include: {
-      user: {
-        select: {
-          id: true,
-          name: true,
-          username: true,
-        },
-      },
-      Likes: {
-        take: 1,
-        where: {
-          user_id: Number(session?.user?.id),
-        },
-      },
-    },
-    orderBy: {
-      id: 'desc',
-    }
-  })
-
-  return NextResponse.json({
-    status: 200,
-    data: posts,
-  });
-}
-
+import { CustomSession, authOptions } from "../auth/[...nextauth]/option";
 export async function POST(request: NextRequest) {
   try {
     const session: CustomSession | null = await getServerSession(authOptions);
@@ -99,6 +67,7 @@ export async function POST(request: NextRequest) {
       status: 200,
       message: "Post created successfully!",
     });
+
   } catch (error) {
     if (error instanceof errors.E_VALIDATION_ERROR) {
       return NextResponse.json(
@@ -107,3 +76,42 @@ export async function POST(request: NextRequest) {
     }
   }
 }
+export const GET = async (request: NextRequest) => {
+  try {
+    const session: CustomSession | null = await getServerSession(authOptions);
+    if (!session) {
+      return NextResponse.json({ status: 401, message: "Un-Authorized" });
+    }
+    const posts = await prisma.post.findMany({
+      include: {
+        user: {
+          select: {
+            id: true,
+            name: true,
+            username: true,
+          },
+        },
+        Likes: {
+          take: 1,
+          where: {
+            user_id: Number(session?.user?.id),
+          },
+        },
+      },
+      orderBy: {
+        id: 'desc',
+      }
+    })
+    return NextResponse.json({
+      status: 200,
+      data: posts,
+    });
+  } catch (error) {
+    if (error instanceof errors.E_VALIDATION_ERROR) {
+      return NextResponse.json(
+        { status: 400, errors: error.messages }
+      );
+    }
+  }
+}
+

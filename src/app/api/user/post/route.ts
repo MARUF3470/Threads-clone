@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from "next/server";
 import { CustomSession, authOptions } from "../../auth/[...nextauth]/option";
 import { getServerSession } from "next-auth";
 import prisma from "@/DB/db.config";
-
 export const GET = async (request: NextRequest) => {
   const session: CustomSession | null = await getServerSession(authOptions)
   if (!session) {
@@ -18,6 +17,7 @@ export const GET = async (request: NextRequest) => {
           id: true,
           name: true,
           username: true,
+          email: true
         },
       },
       Likes: {
@@ -30,5 +30,6 @@ export const GET = async (request: NextRequest) => {
       id: 'desc',
     }
   })
+
   return NextResponse.json({ status: 200, data: post })
 }

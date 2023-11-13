@@ -96,7 +96,7 @@ const AddThreads = () => {
           width={20}
           className="cursor-pointer"
         />
-        <Button onClick={submit} disabled={content.length <= 3 || loading}>
+        <Button onClick={submit} disabled={content?.length <= 3 || loading}>
           Post
         </Button>
       </div>

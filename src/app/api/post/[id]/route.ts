@@ -4,6 +4,7 @@ import { CustomSession, authOptions } from "../../auth/[...nextauth]/option";
 import { getServerSession } from "next-auth";
 import { join } from "path";
 import { rmSync } from "fs";
+import { errors } from "@vinejs/vine";
 
 export const GET = async (request: NextRequest, { params }: { params: { id: number } }) => {
     const session: CustomSession | null = await getServerSession(authOptions);
@@ -44,7 +45,11 @@ export const GET = async (request: NextRequest, { params }: { params: { id: numb
         })
         return NextResponse.json({ status: 200, data: post })
     } catch (error) {
-        console.log(error);
+        if (error instanceof errors.E_VALIDATION_ERROR) {
+            return NextResponse.json(
+                { status: 400, errors: error.messages }
+            );
+        }
     }
 }
 export const DELETE = async (request: NextRequest, { params }: { params: { id: number } }) => {

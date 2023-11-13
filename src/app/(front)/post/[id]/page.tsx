@@ -1,12 +1,17 @@
+"use client";
 import CommentCard from "@/components/common/CommentCard";
 import DynamicBar from "@/components/common/DynamicBar";
 import PostCard from "@/components/common/PostCard";
-import { getSinglePost } from "@/lib/serverMethods";
-import { CommentType } from "@/type";
-import React from "react";
+import { CommentType, PostType } from "@/type";
+import axios from "axios";
+import React, { useState } from "react";
 
-const page = async ({ params }: { params: { id: number } }) => {
-  const post = await getSinglePost(params.id);
+const PostPage = ({ params }: { params: { id: number } }) => {
+  const [post, setPost] = useState<PostType>();
+  axios
+    .get(`/api/post/${params.id}`)
+    .then((res) => setPost(res.data.data))
+    .catch((err) => console.log("Sing post error", err));
   return (
     <div>
       <DynamicBar title="Show Post" />
@@ -20,7 +25,7 @@ const page = async ({ params }: { params: { id: number } }) => {
 
         {post?.Comment ? (
           <div>
-            {post.Comment.map((item: CommentType) => (
+            {post.Comment?.map((item: CommentType) => (
               <CommentCard comment={item} key={item.id} />
             ))}
           </div>
@@ -32,4 +37,4 @@ const page = async ({ params }: { params: { id: number } }) => {
   );
 };
 
-export default page;
+export default PostPage;

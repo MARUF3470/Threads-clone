@@ -9,7 +9,6 @@ import Link from "next/link";
 import SharePost from "./SharePost";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-
 const PostCard = ({
   post,
   noRedirect,
@@ -43,7 +42,7 @@ const PostCard = ({
         </Link>
         {post?.image && <ImageViewer img={post.image} />}
         <div className="flex items-center gap-4 my-2">
-          {post.Likes.length ? (
+          {post?.Likes?.length && toggle === "1" ? (
             <svg
               width="20"
               height="20"
